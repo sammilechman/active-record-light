@@ -14,16 +14,14 @@ class AssocOptions
   end
 
   def table_name
-    # ...
+    "#{@class_name.downcase}s"
   end
 end
 
 class BelongsToOptions < AssocOptions
   def initialize(name, options = {})
     @primary_key = options[:primary_key] || :id
-
     @foreign_key = options[:foreign_key] || "#{name}_id".to_sym
-
     @class_name = options[:class_name] || "#{name.camelcase}"
   end
 end
@@ -31,10 +29,8 @@ end
 class HasManyOptions < AssocOptions
   def initialize(name, self_class_name, options = {})
     @primary_key = options[:primary_key] || :id
-
     @foreign_key = options[:foreign_key] ||
       "#{self_class_name.singularize.downcase}_id".to_sym
-
     @class_name = options[:class_name] ||
       "#{name.singularize.camelcase}"
   end
